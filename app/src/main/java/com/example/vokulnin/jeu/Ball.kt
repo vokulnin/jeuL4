@@ -15,10 +15,18 @@ class Ball(image : Bitmap, X : Float , Y : Float , w : Int , h : Int, Paint : Pa
     val widh : Int = w
     val height : Int = h
     val paint : Paint = Paint
+    var speedx : Float=0f
+    var speedy : Float=0f
+
+     fun SetSpeed(x : Float , y : Float){
+        speedx = x
+        speedy = y
+    }
 
     fun draw (canvas : Canvas){
         val resized = Bitmap.createScaledBitmap(sprite, widh, height, true)
-
+        x += speedx
+        y += speedy
         canvas.drawBitmap(resized,x,y,paint)
     }
 
