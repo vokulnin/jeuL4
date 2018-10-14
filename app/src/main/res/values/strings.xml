@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Jeu</string>
+    <string name="play">play</string>
+    <string name="scoreboard">scoreboard</string>
+    <string name="quit">quit</string>
+    <string name="game_over">game_over</string>
+    <string name="restart">restart</string>
+
 </resources>

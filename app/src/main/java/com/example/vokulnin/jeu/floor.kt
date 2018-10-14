@@ -21,17 +21,17 @@ class floor (image : Bitmap, X : Float, Y : Float, w : Float, h : Float, Paint :
     var speedx : Float=0f
     var speedy : Float=0f
     var main=m
+    var sX : Float=100f
+    var sY : Float=100f
     fun Colision(balle : Ball): Boolean{
         return !((balle.x > x+widh) || (balle.x+balle.widh < x) || (balle.y > y+height) || (balle.y + balle.height < y) )
 
     }
 
     fun draw (canvas : Canvas){
-        //val resized = Bitmap.createScaledBitmap(sprite, widh.toInt(), height.toInt(), true)
-        var shapeDrawable: ShapeDrawable
-        canvas.drawRect(Rect((x * main.screenX.toFloat()).toInt(),(y* main.screenY.toFloat()).toInt(),
-                ((x+widh)*main.screenX.toFloat()).toInt(), ((y-height)*main.screenY.toFloat()).toInt()), paint)
-        //canvas.drawBitmap(resized,x,y,paint)
-       // print(Rect(x.toInt(),y.toInt() ,x.toInt() + widh, y.toInt()- height))
+
+        val resized = Bitmap.createScaledBitmap(sprite, (widh * sX).toInt(), (height*sY).toInt(), true)
+        canvas.drawBitmap(resized,x*sX,y*sY,paint)
+
     }
 }

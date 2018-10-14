@@ -1,10 +1,9 @@
 package com.example.vokulnin.jeu
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Rect
-import android.graphics.RectF
+import android.graphics.*
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RectShape
 import android.util.AttributeSet
 import android.view.SurfaceView
 import com.exemple.vokulnin.jeu.MainActivity
@@ -16,19 +15,48 @@ class DessinView : SurfaceView {
     lateinit var balle : Ball
     constructor(context: Context): super(context)
     lateinit var main : MainActivity
+    var onFloor = true
+    var FirstFrame = true
+    var SecondFrame = false
 
-
+    val paint: Paint = Paint()
 
     constructor(context: Context , attrs:AttributeSet): super(context, attrs)
 
-    override fun onDraw(canvas: Canvas){
-        print("drawed")
-        canvas.drawColor(Color.RED)
-        for(i in main.floors){
-            i.draw(canvas)
 
-            if(i.Colision(balle)) println("collision!!!")
+    override fun onDraw(canvas: Canvas){
+        super.onDraw(canvas)
+        println("frame")
+        canvas.drawColor(Color.WHITE)
+        if(FirstFrame){
+            FirstFrame = false
+         SecondFrame = true}
+
+        else if(SecondFrame){
+            SecondFrame = false
+            for(i in main.floors){
+                i.draw(canvas)
+                i.sX = width.toFloat()
+                i.sY = height.toFloat()
+                balle.sX = width.toFloat()
+                balle.sY = height.toFloat()
+                if(i.Colision(balle)) true
+            }
         }
-        balle.draw(canvas)
+        else{
+            onFloor = false
+            for(i in main.floors){
+                i.draw(canvas)
+                if(i.Colision(balle)) true
+            }
+            if(!onFloor)main.GameOver()
+
+
+            balle.draw(canvas)
+        }
+
+
     }
+
+
 }
