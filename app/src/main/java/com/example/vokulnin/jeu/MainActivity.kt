@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var ballSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.ball) ;
-        var floorSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.wood1_1) ;
+        var floorSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.ball) ;
         var backgroundSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.dirt) ;
-        var generator = Generator(5,this,floorSprite)
+        var generator = Generator(5, 0.1f,this,floorSprite)
         val bitmap: Bitmap = Bitmap.createBitmap(700, 1000, Bitmap.Config.ARGB_8888)
         val canvas: Canvas = Canvas(bitmap)
         var shapeDrawable: ShapeDrawable
@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         val width = 1000
         var dessin = findViewById<DessinView>(R.id.canvas)
 
-        balle= Ball(ballSprite,0.5f,0f,0.2f,0.2f,shapeDrawable.paint, this)
         generator.Generate()
         // draw rectangle shape to canvas
         //shapeDrawable.setBounds( left., top, right, bottom)
@@ -74,13 +73,14 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         }
         canvas.drawRect(Rect(100,100,100,100),shapeDrawable.paint)
         canvas.drawRect (((width/2)-10).toFloat(), 0f, ((width/2)+ 10) .toFloat (), 40f, footingpaint)
-
+        var white = Paint()
+        white.color = Color.RED
+        balle= Ball(ballSprite,0.5f,0f,0.05f,0.05f,white, this)
         dessin.balle = balle
+
         dessin.main = this
         dessin.setWillNotDraw(false)
         balle.SetSpeed(1f,1f)
-        //balle.x = left
-        //balle.y = top
         val monitor = object : Runnable {
             override fun run() {
                 machin()

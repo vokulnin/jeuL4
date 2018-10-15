@@ -9,10 +9,10 @@ import java.util.*
 /**
  * Created by vokulnin on 12/10/2018.
  */
-class Generator(turns:Int , Main:MainActivity , sprite:Bitmap) {
+class Generator(turns:Int, Floorwidth:Float , Main:MainActivity , sprite:Bitmap) {
     var turn:Int = turns
     var main = Main
-
+    var floorwidth = Floorwidth
     var currentX = 0.5f
     var currentY = 0.0f
     var newX = 0.5f
@@ -27,15 +27,15 @@ class Generator(turns:Int , Main:MainActivity , sprite:Bitmap) {
     fun Generate(){
                 for (i in 1..turn) {
 
-                    main.floors.add(floor(floorSprite,currentX,currentY,0.1f,1/turn.toFloat(), Paint(),main))
+                    main.floors.add(floor(floorSprite,currentX,currentY,floorwidth,1/turn.toFloat(), Paint(),main))
                     currentY +=1/turn.toFloat()
-                    newX += rand(-5,5).toFloat()/10
+                    newX =currentX +  rand(-5,5).toFloat()/10
                     if(newX<currentX){
-                        main.floors.add(floor(floorSprite,newX,currentY ,Math.abs(currentX-newX),0.1f, Paint(),main))
+                        main.floors.add(floor(floorSprite,newX,currentY ,Math.abs(currentX-newX)+ floorwidth,floorwidth, Paint(),main))
 
                     }
                     else{
-                        main.floors.add(floor(floorSprite,currentX,currentY,Math.abs(currentX-newX) ,0.1f, Paint(),main))
+                        main.floors.add(floor(floorSprite,currentX,currentY,Math.abs(currentX-newX)+floorwidth,floorwidth, Paint(),main))
 
                     }
                     currentX = newX

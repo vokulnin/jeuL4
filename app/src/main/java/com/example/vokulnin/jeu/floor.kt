@@ -1,9 +1,6 @@
 package com.example.vokulnin.jeu
 
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import com.exemple.vokulnin.jeu.MainActivity
@@ -19,19 +16,24 @@ class floor (image : Bitmap, X : Float, Y : Float, w : Float, h : Float, Paint :
     var height  = h
     var paint : Paint = Paint
     var speedx : Float=0f
-    var speedy : Float=0f
+    var speedy : Float=-0.5f
     var main=m
     var sX : Float=100f
     var sY : Float=100f
+    lateinit var collider : RectF
     fun Colision(balle : Ball): Boolean{
-        return !((balle.x > x+widh) || (balle.x+balle.widh < x) || (balle.y > y+height) || (balle.y + balle.height < y) )
 
+        return !((balle.x > x+widh) || (balle.x+balle.widh < x) || (balle.y > y+height) || (balle.y + balle.height < y) )
     }
 
     fun draw (canvas : Canvas){
 
         val resized = Bitmap.createScaledBitmap(sprite, (widh * sX).toInt(), (height*sY).toInt(), true)
+        x += speedx/500f
+        y += speedy/250f
         canvas.drawBitmap(resized,x*sX,y*sY,paint)
+        collider = RectF(x*sX,y*sY,x*sX + widh*sX,y*sY+height*sY)
+        canvas.drawRect(collider,paint)
 
     }
 }

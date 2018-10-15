@@ -26,7 +26,6 @@ class DessinView : SurfaceView {
 
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
-        println("frame")
         canvas.drawColor(Color.WHITE)
         if(FirstFrame){
             FirstFrame = false
@@ -40,16 +39,18 @@ class DessinView : SurfaceView {
                 i.sY = height.toFloat()
                 balle.sX = width.toFloat()
                 balle.sY = height.toFloat()
-                if(i.Colision(balle)) true
             }
         }
         else{
             onFloor = false
             for(i in main.floors){
                 i.draw(canvas)
-                if(i.Colision(balle)) true
+                if(i.Colision(balle)) onFloor = true
             }
-            if(!onFloor)main.GameOver()
+            if(!onFloor){
+                println("gameover")
+                main.GameOver()
+            }
 
 
             balle.draw(canvas)
