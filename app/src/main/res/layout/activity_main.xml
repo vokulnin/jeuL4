@@ -17,5 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="21"
+        tools:layout_editor_absoluteX="184dp"
+        tools:layout_editor_absoluteY="16dp" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -18,21 +18,29 @@ class DessinView : SurfaceView {
     var onFloor = true
     var FirstFrame = true
     var SecondFrame = false
-
+    var generate = false
     val paint: Paint = Paint()
-
+    lateinit var Last_floor : floor
     constructor(context: Context , attrs:AttributeSet): super(context, attrs)
 
 
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
         canvas.drawColor(Color.WHITE)
+        var toRemove = kotlin.collections.mutableListOf<floor>()
+        if(main.floors.size<20){
+            generate = true
+        }
         if(FirstFrame){
             FirstFrame = false
+
          SecondFrame = true}
 
         else if(SecondFrame){
             SecondFrame = false
+            main.generator.Generate()
+            main.generator.Generate(main.floors.last().x,main.floors.last().y - main.floors.last().height)
+
             for(i in main.floors){
                 i.draw(canvas)
                 i.sX = width.toFloat()
@@ -43,10 +51,28 @@ class DessinView : SurfaceView {
         }
         else{
             onFloor = false
+            if(generate){
+                main.generator.Generate(Last_floor.x,Last_floor.y - Last_floor.height)
+                for(i in main.floors) {
+                    i.sX = width.toFloat()
+                    i.sY = height.toFloat()
+                }
+                generate = false
+            }
             for(i in main.floors){
                 i.draw(canvas)
+                if( i.y+i.height <0){
+                    toRemove.add(i)
+                }
                 if(i.Colision(balle)) onFloor = true
             }
+
+            for(i in toRemove){
+                main.floors.remove(i)
+
+            }
+
+
             if(!onFloor){
                 println("gameover")
                 main.GameOver()

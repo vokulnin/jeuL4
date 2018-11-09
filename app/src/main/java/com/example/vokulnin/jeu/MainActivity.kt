@@ -12,87 +12,105 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.media.MediaPlayer
+import android.widget.TextView
 import com.example.vokulnin.jeu.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.game_over.*
 
 class MainActivity : AppCompatActivity() , SensorEventListener {
 
 
     private  lateinit var sensorManager: SensorManager
     private lateinit var accelerometre: Sensor
+    lateinit var generator: Generator
+    lateinit var Score : TextView
+    lateinit var mp : MediaPlayer
+    var running = true
+    var score =0
     var floors = mutableListOf<floor>()
-     var screenX=10
-     var screenY=10
+
     private lateinit var balle: Ball
+
     fun GameOver(){
+        running = false
+        mp.stop()
         val intent = Intent(this, GameOverActivity::class.java)
-        //intent.putExtra("key", value)
+        intent.putExtra("score", score.toString() )
         startActivity(intent)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometre =  sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
+        var dessin = findViewById<DessinView>(R.id.canvas)
+        dessin.setWillNotDraw(false)
 
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        var ballSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.ball) ;
-        var floorSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.ball) ;
+
+
+        var white = Paint()
+        white.color = Color.RED
+        balle= Ball(0.5f,0f,0.05f,0.05f,white, this)
         var backgroundSprite : Bitmap =BitmapFactory.decodeResource(resources,R.drawable.dirt) ;
-        var generator = Generator(5, 0.1f,this,floorSprite)
+        generator = Generator(10, 0.1f,this,dessin)
+
+
+        mp = MediaPlayer.create (this, R.raw.musique)
+        mp.start()
+
+        Score = findViewById(R.id.Score)
+
+
+
         val bitmap: Bitmap = Bitmap.createBitmap(700, 1000, Bitmap.Config.ARGB_8888)
         val canvas: Canvas = Canvas(bitmap)
         var shapeDrawable: ShapeDrawable
         var handler = Handler()
-        var mHandler = Handler()
-        var left : Float =  100f
-        var top : Float =  100f
-        var right : Int =  600
-        var bottom : Int = 400
+
         shapeDrawable = ShapeDrawable(RectShape())
-        val footingpaint = Paint ()
 
-        val width = 1000
-        var dessin = findViewById<DessinView>(R.id.canvas)
+        //val width = 1000
 
-        generator.Generate()
-        // draw rectangle shape to canvas
-        //shapeDrawable.setBounds( left., top, right, bottom)
-        //shapeDrawable.getPaint().setColor(Color.parseColor("#009944"))
-       // shapeDrawable.draw(canvas)
-        footingpaint.setARGB (255, 128, 128, 128)
+
 
         var screenX = canvas.width
         var screenY = canvas.height
 
-        dessin.setWillNotDraw(false)
         fun machin(){
            dessin.invalidate()
-
         }
-        canvas.drawRect(Rect(100,100,100,100),shapeDrawable.paint)
-        canvas.drawRect (((width/2)-10).toFloat(), 0f, ((width/2)+ 10) .toFloat (), 40f, footingpaint)
-        var white = Paint()
-        white.color = Color.RED
-        balle= Ball(ballSprite,0.5f,0f,0.05f,0.05f,white, this)
-        dessin.balle = balle
 
+
+        dessin.balle = balle
         dessin.main = this
-        dessin.setWillNotDraw(false)
-        balle.SetSpeed(1f,1f)
+
         val monitor = object : Runnable {
             override fun run() {
-                machin()
-                 screenX = canvas.width
-                 screenY = canvas.height
-                handler.postDelayed(this, 20)
+                if (running == true) {
 
+                    machin()
+                    screenX = canvas.width
+                    screenY = canvas.height
+                    handler.postDelayed(this, 20)
+
+                }
             }
         }
+        val scoreThread = object : Runnable {
+            override fun run() {
+                if (running == true) {
+                    score +=1
+                Score.setText("score : " + score.toString())
+                handler.postDelayed(this, 1000)
+            }}
+        }
+
+        handler.postDelayed(scoreThread, 1)
         handler.postDelayed(monitor, 1)
 
-        //imageV.background = BitmapDrawable(getResources(), bitmap)
     }
     override fun onResume() {
         super.onResume()
@@ -109,4 +127,5 @@ class MainActivity : AppCompatActivity() , SensorEventListener {
         balle.speedy = valuesGyroscopey
         balle.speedx = -valuesGyroscopex
     }
+
 }

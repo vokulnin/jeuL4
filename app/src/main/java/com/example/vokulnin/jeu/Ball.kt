@@ -7,9 +7,8 @@ import com.exemple.vokulnin.jeu.MainActivity
  * Created by CollFnac on 24/09/2018.
  */
 
-class Ball(image : Bitmap, X : Float , Y : Float , w : Float , h : Float, Paint : Paint , m : MainActivity){
+class Ball(X : Float , Y : Float , w : Float , h : Float, Paint : Paint , m : MainActivity){
     val main : MainActivity = m
-    val sprite : Bitmap =  image
     var x : Float = X
     var y : Float = Y
     var widh : Float = w
@@ -29,17 +28,13 @@ class Ball(image : Bitmap, X : Float , Y : Float , w : Float , h : Float, Paint 
     fun draw (canvas : Canvas){
         canvas.drawRect(Rect(100,100,100,100),paint)
 
-       // val resized = Bitmap.createScaledBitmap(sprite, (widh * sX).toInt(), (height*sX).toInt(), true)
         x += speedx/500f
-        y += speedy/250f
+        y += speedy/300f
         val test = RectF(x * sX ,y* sY,
                 (x*sX)*(widh*sX), (y*sY)+(height*sY))
-       // canvas.drawRect(test,paint)
         collider = RectF(x*sX,y*sY,x*sX + widh*sX,y*sY+height*sY)
-
         canvas.drawRect(collider,paint)
 
-        //canvas.drawBitmap(resized,x*sX,y*sY,paint)
 
     }
 

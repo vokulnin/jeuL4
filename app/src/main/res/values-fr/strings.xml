@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Jeu</string>
+    <string name="play">jouer</string>
+    <string name="scoreboard">tableau des scores</string>
+    <string name="quit">quitter</string>
+    <string name="game_over">vous avez perdu</string>
+    <string name="restart">recommencer</string>
+    <string name="take_photo">prendre une photo</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="score">votre score </string>
+    <string name="hightscore">NOUVEAU MEILLEUR SCORE </string>
+    <string name="photo">prendre une photo </string>
+    <string name="gps">sauvegarder votre position </string>
+    <string name="enter_name">entrez votre nom </string>
+    <string name="best_score">meilleur score </string>
+    <string name="title_activity_test">Map</string>
+    <string name="savescore">sauvegarder votre meilleur score</string>
+
+</resources>

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="16dp"
         android:text="@string/play"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,17 +20,38 @@
         android:id="@+id/quit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="59dp"
+        android:layout_marginBottom="68dp"
         android:layout_marginStart="148dp"
         android:text="@string/quit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/photo"
+        android:layout_width="245dp"
+        android:layout_height="235dp"
+        android:layout_marginStart="68dp"
+        app:layout_constraintBottom_toTopOf="@+id/quit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal_background" />
+
+    <TextView
+        android:id="@+id/best_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/take_photo"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="231dp" />
+        android:layout_marginBottom="22dp"
+        android:layout_marginStart="159dp"
+        android:text="@string/best_score"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="146dp"
+        android:text="Jean kevin : 45"
+        app:layout_constraintBottom_toTopOf="@+id/photo"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

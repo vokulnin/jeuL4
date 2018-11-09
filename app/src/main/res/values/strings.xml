@@ -6,5 +6,14 @@
     <string name="game_over">game_over</string>
     <string name="restart">restart</string>
     <string name="take_photo">take photo</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="score">your score : </string>
+    <string name="hightscore">NEW HIGHTSCORE! </string>
+    <string name="photo">immortalise with photo </string>
+    <string name="gps">save your location </string>
+    <string name="enter_name">ENTER YOUR NAME </string>
+    <string name="best_score">best score </string>
+    <string name="title_activity_test">Map</string>
+    <string name="savescore">Save highscore</string>
 
 </resources>
